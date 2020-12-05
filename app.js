@@ -25,8 +25,28 @@ const isValidEmail = (email) => {
     return re.test(String(email).toLowerCase());
 };
 
+// Function: extract field name
+const getFieldName = (input) =>
+    input.id.charAt(0).toUpperCase() + input.id.slice(1);
+
+// Function: Check required fields
+const checkRequired = (inputArr) => {
+    inputArr.forEach((currentInput) => {
+        if (currentInput.value.trim() === '') {
+            showError(
+                currentInput,
+                `${getFieldName(currentInput)} is required`
+            );
+        } else {
+            showSuccess(currentInput);
+        }
+    });
+};
+
 // EVENT LISTENERS
 // Form submit event listener
 form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    checkRequired([username, email, password, password2]);
 });
